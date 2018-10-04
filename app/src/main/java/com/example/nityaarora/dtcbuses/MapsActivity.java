@@ -23,6 +23,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
@@ -43,6 +44,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     private GoogleMap mMap;
+
     LocationManager locationManager;
     ArrayList markerpoints=new ArrayList();
 
@@ -83,6 +85,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         str+=list.get(0).getCountryCode();
                         mMap.addMarker(new MarkerOptions().position(latLng).title(str));
                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,16f));
+                        markerpoints.add(latLng);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -118,6 +121,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
 //        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
 
+
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
             @Override
@@ -127,16 +131,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     mMap.clear();
                     markerpoints.clear();
                 }
+                if(markerpoints.size()==0)
+                    mMap.addMarker(new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
                 markerpoints.add(latLng);
-                MarkerOptions options=new MarkerOptions();
-                options.position(latLng);
+                //MarkerOptions options=new MarkerOptions();
+                //options.position(latLng);
 
-                if(markerpoints.size()==1)
-                    options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN));
-                else if(markerpoints.size()==2)
-                    options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
+                //if(markerpoints.size()==1)
+                    //options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                    //mMap.addMarker(new MarkerOptions().position(latLng).draggable(true).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+                if(markerpoints.size()==2)
+                    //options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
+                    mMap.addMarker(new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)));
 
-                mMap.addMarker(options);
+                //mMap.addMarker(options);
 
                 if(markerpoints.size()>=2)
                 {
@@ -245,15 +253,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         String sensor="sensor=false";
         String mode="mode=transit";
-        String dep="departure_time=now";
-        String key="AIzaSyAgdw69cHPAW0MvR4YzM-MA-krPF4woYfw";
+        //String dep="departure_time=now";
+        String key="AIzaSyAnbNZrnr0cfOB0ba15vcIjCxfn8-3Dt3s";
+        //String transit_mode="transit_mode=bus";
 
-        String parameters=str_origin+"&"+str_dest+"&"+sensor+"&"+mode+"&"+dep;
+        String parameters=str_origin+"&"+str_dest+"&"+mode;
 
         String output="json";
         String alt="alternatives=false";
 
-        String url="https://maps.googleapis.com/maps/api/directions/"+output+"?"+parameters+"?"+alt+"&"+key;
+        String url="https://maps.googleapis.com/maps/api/directions/"+output+"?"+parameters+"?"+alt+"&key="+key+"&"+sensor;
         Log.i("bla",url);
 
         return url;
@@ -294,7 +303,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             urlConnection.disconnect();
         }
         return data;
-
 
     }
 
