@@ -1,5 +1,7 @@
 package com.example.nityaarora.dtcbuses;
 
+import android.util.Log;
+
 import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONArray;
@@ -35,6 +37,7 @@ public class DirectionJSONParser {
                     for(int k=0;k<jSteps.length();k++){
                         String polyline = "";
                         polyline = (String)((JSONObject)((JSONObject)jSteps.get(k)).get("polyline")).get("points");
+                        Log.i("bla2",polyline);
                         List list = decodePoly(polyline);
 
                         /** Traversing all points */
@@ -53,6 +56,7 @@ public class DirectionJSONParser {
             e.printStackTrace();
         }catch (Exception e){
         }
+        Log.i("blaa1",routes.toString());
 
         return routes;
     }
