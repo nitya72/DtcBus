@@ -16,6 +16,7 @@ public class DirectionJSONParser {
     public List<List<HashMap<String,String>>> parse(JSONObject jObject){
 
         List<List<HashMap<String, String>>> routes = new ArrayList<List<HashMap<String,String>>>();
+        List<List<HashMap<String,String>>> routes_transit= new ArrayList<>();
         JSONArray jRoutes = null;
         JSONArray jLegs = null;
         JSONArray jSteps = null;
@@ -28,6 +29,7 @@ public class DirectionJSONParser {
             for(int i=0;i<jRoutes.length();i++){
                 jLegs = ( (JSONObject)jRoutes.get(i)).getJSONArray("legs");
                 List path = new ArrayList<HashMap<String, String>>();
+                List path_transit=new ArrayList<HashMap<String,String>>();
 
                 /** Traversing all legs */
                 for(int j=0;j<jLegs.length();j++){
@@ -35,20 +37,36 @@ public class DirectionJSONParser {
 
                     /** Traversing all steps */
                     for(int k=0;k<jSteps.length();k++){
-                        String polyline = "";
+                        String polyline = "",travel_mode="";
                         polyline = (String)((JSONObject)((JSONObject)jSteps.get(k)).get("polyline")).get("points");
-                        Log.i("bla2",polyline);
+
+                        travel_mode = (String)((JSONObject)jSteps.get(k)).get("travel_mode");
+
+                        Log.i("blaa","*"+travel_mode+"*");
+
                         List list = decodePoly(polyline);
 
                         /** Traversing all points */
-                        for(int l=0;l <list.size();l++){
+                        /*for(int l=0;l <list.size();l++){
                             HashMap<String, String> hm = new HashMap<String, String>();
                             hm.put("lat", Double.toString(((LatLng)list.get(l)).latitude) );
                             hm.put("lng", Double.toString(((LatLng)list.get(l)).longitude) );
                             path.add(hm);
+                        }*/
+
+                        if(travel_mode.equals("TRANSIT"))
+                        {
+                            Log.i("bla","yoyo");
+                            for(int l=0;l <list.size();l++){
+                                HashMap<String, String> hm = new HashMap<String, String>();
+                                hm.put("lat", Double.toString(((LatLng)list.get(l)).latitude) );
+                                hm.put("lng", Double.toString(((LatLng)list.get(l)).longitude) );
+                                path_transit.add(hm);
+                            }
                         }
                     }
                     routes.add(path);
+                    routes_transit.add(path_transit);
                 }
             }
 
@@ -56,9 +74,9 @@ public class DirectionJSONParser {
             e.printStackTrace();
         }catch (Exception e){
         }
-        Log.i("blaa1",routes.toString());
+        Log.i("blaa1",routes_transit.toString());
 
-        return routes;
+        return routes_transit;
     }
 
     /**
