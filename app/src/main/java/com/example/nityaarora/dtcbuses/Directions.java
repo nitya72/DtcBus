@@ -27,11 +27,15 @@ import java.util.List;
 public class Directions {
 
     GoogleMap mMap;
+    String origin,destination;
 
     public void run(GoogleMap mMap,String origin,String destination){
-        mMap=this.mMap;
+        this.mMap=mMap;
+        this.origin=origin;
+        this.destination=destination;
 
         String url=getDirectionsUrl(origin,destination);
+        Log.i("blapp",origin+"   "+destination);
 
         DownloadTask downloadTask=new DownloadTask();
         downloadTask.execute(url);
@@ -98,7 +102,7 @@ public class Directions {
             Log.i("bla99",lists.toString());
 
             Traffic obj=new Traffic();
-            obj.call(lists);
+            obj.call(lists,origin,destination);
 
             for(int i=0;i<lists.size();i++) {
                 points=new ArrayList();
@@ -127,17 +131,17 @@ public class Directions {
 
     }
 
-    private String getDirectionsUrl(String origin, String dest){
+    private String getDirectionsUrl(String origin,String dest){
 
         //String str_origin="origin="+origin.latitude+","+origin.longitude;
-        String str_origin="origin="+"NoidaGolfCourse,Sector43,Noida,UttarPradesh";
+        String str_origin="origin="+origin;
 
         //String str_dest="destination="+dest.latitude+","+dest.longitude;
-        String str_dest="destination="+"AIIMS,AnsariNagar,NewDelhi,Delhi";
+        String str_dest="destination="+dest;
 
         String mode="mode=transit";
         String sensor="sensor=false";
-        String dep="departure_time=1542809997";
+        String dep="departure_time=1542381651";
         String key="AIzaSyAnbNZrnr0cfOB0ba15vcIjCxfn8-3Dt3s";
         String transit_mode="transit_mode=bus";
         String alt="alternatives=false";

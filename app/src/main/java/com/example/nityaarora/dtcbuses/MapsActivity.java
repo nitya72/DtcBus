@@ -65,7 +65,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (requestCode==1){
             if(grantResults[0]==PackageManager.PERMISSION_GRANTED && grantResults.length>0){
                 if(ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION)!=PackageManager.PERMISSION_GRANTED){
-                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,locationListener);
+                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,1000,0,locationListener);
                 }
             }
         }
@@ -88,6 +88,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        //googleMap = ((SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map)).getMap();
         mMap = googleMap;
 
         Toast.makeText(this, "map appeared", Toast.LENGTH_SHORT).show();
@@ -138,8 +139,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1);
         }
         else {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-            Location xlocation=locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+            Location xlocation=locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
             LatLng user=new LatLng(xlocation.getLatitude(),xlocation.getLongitude());
             Log.i("yeahh",user.toString());
             mMap.addMarker(new MarkerOptions().position(user).title("my"));
@@ -157,6 +158,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     GeoAddress obj=new GeoAddress();
                     LatLng fcoor=obj.getCoordinates(lfrom,getApplicationContext());
                     LatLng tcoor=obj.getCoordinates(lto,getApplicationContext());
+
+                    mMap.clear();
 
                     mMap.addMarker(new MarkerOptions().position(fcoor).title("Source").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
                     mMap.addMarker(new MarkerOptions().position(tcoor).title("Destination").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)));

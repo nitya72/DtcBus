@@ -24,15 +24,15 @@ public class Traffic {
 
     //List<List<HashMap<String, String>>> routes = null;
 
-    public void call(List<List<HashMap<String, String>>> routes) {
+    public void call(List<List<HashMap<String, String>>> routes,String origin,String destination) {
 
-        String url = getDirectionsUrl(routes);
+        String url = getDirectionsUrl(routes,origin,destination);
 
         DownloadTask downloadTask = new DownloadTask();
         downloadTask.execute(url);
     }
 
-    private String getDirectionsUrl(List<List<HashMap<String, String>>> routes) {
+    private String getDirectionsUrl(List<List<HashMap<String, String>>> routes,String origin,String destination) {
 
         //Log.i("bla98",routes.toString());
 
@@ -42,7 +42,7 @@ public class Traffic {
 
             List<HashMap<String, String>> path = routes.get(i);
 
-            for(int j=0;j<path.size();j+=Math.ceil(path.size()/(21*routes.size())))
+            for(int j=0;j<path.size();j+=Math.ceil(path.size()/(20*routes.size())))
             {
                 HashMap point=path.get(j);
 
@@ -56,15 +56,15 @@ public class Traffic {
         }
 
         //String str_origin="origin="+origin.latitude+","+origin.longitude;
-        String str_origin = "origin=" + "28.56104,77.34573";
+        String str_origin = "origin=" + origin;
 
         //String str_dest="destination="+dest.latitude+","+dest.longitude;
-        String str_dest = "destination=" + "28.57259,77.31006";
+        String str_dest = "destination=" + destination;
 
         String mode = "mode=driving";
         String sensor = "sensor=false";
         String key = "AIzaSyAnbNZrnr0cfOB0ba15vcIjCxfn8-3Dt3s";
-        String dep="departure_time=1542809997";
+        String dep="departure_time=1542381651";
 
         String parameters = mode + "&" + dep+"&"+str_origin + "&" + str_dest+way;
 
