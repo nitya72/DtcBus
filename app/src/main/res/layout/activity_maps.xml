@@ -37,5 +37,33 @@
             android:id="@+id/get"
             android:text="GET"
             android:layout_gravity="center"/>
+
+        <EditText
+            android:layout_width="0sp"
+            android:layout_height="0sp"
+            android:id="@+id/from1"/>
+
+        <EditText
+            android:layout_width="0sp"
+            android:layout_height="0sp"
+            android:id="@+id/from2"/>
+
+
+        <EditText
+            android:layout_width="0sp"
+            android:layout_height="0sp"
+            android:id="@+id/from3"/>
+
+
+        <EditText
+            android:layout_width="0sp"
+            android:layout_height="0sp"
+            android:id="@+id/from4"/>
+
+
+        <EditText
+            android:layout_width="0sp"
+            android:layout_height="0sp"
+            android:id="@+id/from5"/>
     </LinearLayout>
 </RelativeLayout>

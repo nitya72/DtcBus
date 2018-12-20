@@ -26,10 +26,10 @@ import java.util.List;
 
 public class Directions {
 
-    GoogleMap mMap;
+    static GoogleMap mMap;
     String origin,destination;
 
-    public void run(GoogleMap mMap,String origin,String destination){
+    public String run(GoogleMap mMap,String origin,String destination){
         this.mMap=mMap;
         this.origin=origin;
         this.destination=destination;
@@ -37,13 +37,25 @@ public class Directions {
         String url=getDirectionsUrl(origin,destination);
         Log.i("blapp",origin+"   "+destination);
 
-        DownloadTask downloadTask=new DownloadTask();
-        downloadTask.execute(url);
+        //DownloadTask downloadTask=new DownloadTask();
+        //downloadTask.execute(url);
+        return url;
+
 
     }
 
     @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
-    private class DownloadTask extends AsyncTask {
+     static class DownloadTask extends AsyncTask {
+
+        public interface AsyncResponse{
+            void processFinish(Object o);
+        }
+
+        public DownloadTask.AsyncResponse delegate=null;
+
+        public DownloadTask(AsyncResponse delegate){
+            this.delegate=delegate;
+        }
 
         @Override
         protected Object doInBackground(Object[] objects) {
@@ -65,44 +77,53 @@ public class Directions {
         protected void onPostExecute(Object o) {
             super.onPostExecute(o);
 
-            ParserTask parserTask=new ParserTask();
+            //ParserTask parserTask=new ParserTask();
 
-            parserTask.execute(o.toString());
+            //parserTask.execute(o.toString());
+            delegate.processFinish(o);
         }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
-    private class ParserTask extends AsyncTask<String, String, List<List<HashMap<String, String>>>> {
+     static class ParserTask extends AsyncTask<String, String, Type2> {
+
+        public interface AsyncResponse{
+            void processFinish(Type2 type2);
+        }
+
+        public ParserTask.AsyncResponse delegate=null;
+
+        public ParserTask(AsyncResponse delegate){
+            this.delegate=delegate;
+        }
 
         @Override
-        protected List<List<HashMap<String, String>>> doInBackground(String... strings) {
+        protected Type2 doInBackground(String... strings) {
 
             JSONObject jobject;
             List<List<HashMap<String, String>>> routes=null;
+            Type2 type2=null;
 
             try{
                 jobject=new JSONObject(strings[0]);
                 DirectionJSONParser parser=new DirectionJSONParser();
-                routes=parser.parse(jobject);
-                Log.i("blaa2",routes.toString());
+                type2=parser.parse(jobject);
+                //Log.i("blaa2",routes.toString());
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            return routes;
+            return type2;
 
         }
 
         @Override
-        protected void onPostExecute(List<List<HashMap<String, String>>> lists) {
+        protected void onPostExecute(Type2 type2) {
             ArrayList points=null;
             PolylineOptions lineOptions=null;
-            MarkerOptions markerOptions=new MarkerOptions();
+            List<List<HashMap<String, String>>> lists=type2.routes;
 
             Log.i("bla99",lists.toString());
-
-            Traffic obj=new Traffic();
-            obj.call(lists,origin,destination);
 
             for(int i=0;i<lists.size();i++) {
                 points=new ArrayList();
@@ -127,6 +148,7 @@ public class Directions {
 
             }
             mMap.addPolyline(lineOptions);
+            delegate.processFinish(type2);
         }
 
     }
@@ -141,7 +163,7 @@ public class Directions {
 
         String mode="mode=transit";
         String sensor="sensor=false";
-        String dep="departure_time=1542381651";
+        String dep="departure_time=1542799483";
         String key="AIzaSyAnbNZrnr0cfOB0ba15vcIjCxfn8-3Dt3s";
         String transit_mode="transit_mode=bus";
         String alt="alternatives=false";
@@ -157,7 +179,7 @@ public class Directions {
         return url;
     }
 
-    private String downloadUrl(String strUrl) throws IOException {
+    private static String downloadUrl(String strUrl) throws IOException {
         String data="";
         InputStream iStream=null;
         HttpURLConnection urlConnection=null;

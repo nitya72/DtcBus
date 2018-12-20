@@ -1,0 +1,184 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:alpha="1">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:orientation="vertical"
+        tools:context=".MainActivity"
+        android:background="@drawable/back">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/text1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Traffic vs Cost :"
+                android:textSize="20sp"
+                android:textStyle="bold|italic"
+                android:textColor="@color/colorPrimaryDark"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="147dp"
+                tools:layout_editor_absoluteY="37dp" />
+
+            <Spinner
+                android:id="@+id/spin1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="125dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"></Spinner>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/text2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Traffic vs Weather :"
+                android:textSize="20sp"
+                android:textStyle="bold|italic"
+                android:textColor="@color/colorPrimaryDark"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="147dp"
+                tools:layout_editor_absoluteY="37dp" />
+
+            <Spinner
+                android:id="@+id/spin2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="95dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"></Spinner>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/text3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Traffic vs Walking Distance :"
+                android:textSize="20sp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold|italic"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="147dp"
+                tools:layout_editor_absoluteY="37dp" />
+
+            <Spinner
+                android:id="@+id/spin3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="18dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"></Spinner>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/text4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
+                android:text="Cost vs Weather :"
+                android:textSize="20sp"
+                android:textStyle="bold|italic"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="147dp"
+                tools:layout_editor_absoluteY="37dp" />
+
+            <Spinner
+                android:id="@+id/spin4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="115dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"></Spinner>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/text5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cost vs Walking Distance :"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="20sp"
+                android:textStyle="bold|italic"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="147dp"
+                tools:layout_editor_absoluteY="37dp" />
+
+            <Spinner
+                android:id="@+id/spin5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="38dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"></Spinner>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/text6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
+                android:text="Weather vs Walking Distance :"
+                android:textSize="19sp"
+                android:textStyle="bold|italic"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="147dp"
+                tools:layout_editor_absoluteY="37dp" />
+
+            <Spinner
+                android:id="@+id/spin6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"></Spinner>
+        </LinearLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:onClick="yo"
+            android:padding="15dp"
+            android:text="Submit"
+            android:textSize="20sp"
+            android:textStyle="italic" />
+
+
+    </LinearLayout>
+</ScrollView>
